@@ -20,8 +20,19 @@
 // Write a recursive method called countVowels that returns the number of vowels in a given String
 // countVowels('abcedfg') ->2
 
-var countVowels = function(str){
+var countVowels = function(str) {
+  var count = 0;
 
+  if ('aeiou'.includes(str[0])) {
+    ++count;
+  }
+
+  //base case
+  if (str.length === 1) {
+    return count;
+  }
+
+  return count + countVowels(str.substring(1));
 };
 
 ///////////////////////////////////////////////////////////////////////
@@ -33,10 +44,29 @@ var countVowels = function(str){
 // sumDigits(126) → 9
 // sumDigits(49) → 13
 // sumDigits(12) → 3
-
-var recursiveSum = function(n){
-
+// 126, 6, 6 + rs(12), 2, 2 + rs(1), 1, (2 + 1) + 6 
+var recursiveSum = function(n) {
+  var digit = n;
+	//base case
+  if (n < 10) {
+    return digit;
+  } else {
+    digit = recursiveSum(n % 10);
+  }
+  return digit + recursiveSum(Math.floor(n / 10));
 };
+
+assert(recursiveSum(126) === 9, 'It should be 9');
+
+function assert(condition, message) {
+  if (!condition) {
+    message = message || 'Assertion failed';
+    if (typeof Error !== 'undefined') {
+      throw new Error(message);
+    }
+    throw message;
+  }
+}
 
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
@@ -47,8 +77,16 @@ var recursiveSum = function(n){
 // PowerOfTwo(8) -> true
 // PowerOfTwo(9) -> false
 
-var isPowerOfTwo = function(n){
-
+var isPowerOfTwo = function(n) {
+  var quotient = n / 2;
+  if (quotient === 1) {
+    return true;
+  } else if (quotient % 2 === 1 || quotient < 1) {
+    return false;
+  } else {
+    return isPowerOfTwo(quotient);
+  }
+  
 };
 
 ///////////////////////////////////////////////////////////////////////
